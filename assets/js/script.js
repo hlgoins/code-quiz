@@ -41,8 +41,13 @@ var choicesFour = document.getElementById('choices-4');
 
 questionContainer.style.display = 'none';
 
-var currentQuestion = 0;
+choicesOne.addEventListener('click', answerCheck);
+choicesTwo.addEventListener('click', answerCheck);
+choicesThree.addEventListener('click', answerCheck);
+choicesFour.addEventListener('click', answerCheck);
 
+var currentQuestion = 0;
+var scoreCount = 0;
 var startQuiz = document.querySelector('#start-btn');
 startQuiz.addEventListener('click', function(){
     questionContainer.style.display = 'block';
@@ -50,10 +55,36 @@ startQuiz.addEventListener('click', function(){
     showQuestion();
 })
 
+var score = 0;
+var time = 100;
+var correctAnswer = document.getElementById('correct-answer');
+var scoreH2 = document.getElementById('score')
+var timerH2 = document.getElementById('timer')
+
 function showQuestion(){
 questionTitle.textContent = questionBank[currentQuestion].q
 choicesOne.textContent = questionBank[currentQuestion].choices1
 choicesTwo.textContent = questionBank[currentQuestion].choices2
 choicesThree.textContent = questionBank[currentQuestion].choices3
 choicesFour.textContent = questionBank[currentQuestion].choices4
+}
+
+function answerCheck(){
+    var userAnswer = this.getAttribute('data-value');
+    console.log(userAnswer);
+    if (userAnswer == questionBank[currentQuestion].answer){
+        scoreCount += 10;
+        scoreH2.textContent = scoreCount;
+        correctAnswer.textContent = 'Correct!'
+    } else{
+        scoreCount -= 5;
+        scoreH2.textContent = scoreCount;
+        correctAnswer.textContent = 'That is wrong!'
+    }
+    if(currentQuestion < questionBank.length - 1){
+        currentQuestion++
+        showQuestion();
+    } else{
+
+    }
 }
